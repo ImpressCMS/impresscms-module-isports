@@ -1,0 +1,23 @@
+<{if $isAdmin == 1}>
+	<div class="ics_adminlinks" align="center"><{$icricketstats_adminpage}></div>
+<{/if}>
+
+<{if $com_rule <> 0}>
+	<div class="ics_footer_commentnav">
+		<{$commentsnav}>
+		<{$lang_notice}>
+	</div>
+	
+	<div class="ics_footer_comments">
+		<!-- start comments loop -->
+		<{if $comment_mode == "flat"}>
+			<{include file="db:system_comments_flat.html"}>
+		<{elseif $comment_mode == "thread"}>
+			<{include file="db:system_comments_thread.html"}>
+		<{elseif $comment_mode == "nest"}>
+			<{include file="db:system_comments_nest.html"}>
+		<{/if}>
+		<!-- end comments loop -->
+	</div>
+<{/if}>
+<{include file='db:system_notification_select.html'}>
