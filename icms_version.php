@@ -7,7 +7,7 @@
 * @package	module
 * @since		1.0
 * @author		vaughan <vaughan@impresscms.org>
-* @version	$Id: xoops_version.php 1 2008-08-10 14:00:45Z m0nty_ $
+* @version	$Id: icms_version.php 1 2008-08-10 14:00:45Z m0nty_ $
 */
 
 $modversion['name'] = 'iSports';
