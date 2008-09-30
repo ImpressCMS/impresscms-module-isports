@@ -1,38 +1,39 @@
 <?php
 /**
-* iSports Module
+* Admin header file
 *
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
+* This file is included in all pages of the admin side and being so, it proceeds to a few
+* common things.
+*
+* @copyright	http://www.impresscms.org The ImpressCMS Project
 * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package	module
 * @since		1.0
-* @author		vaughan <vaughan@impresscms.org>
-* @version	$Id: admin_header.php 1 2008-08-10 14:00:45Z m0nty_ $
+* @author		Vaughan Montgomery aka M0nty <vaughan@impresscms.org>
+* @version	$Id$
 */
-include '../../../include/cp_header.php';
-include_once ICMS_ROOT_PATH.'/modules/isports/include/functions.php');
-include_once ICMS_ROOT_PATH.'/modules/isports/include/common.php');
-include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 
-$myts = & MyTextSanitizer::getInstance();
+include_once '../../../include/cp_header.php';
+include_once ICMS_ROOT_PATH.'/modules/'.basename(dirname(dirname(__FILE__))).'/include/common.php';
 
-$imagearray = array
-(
-	'editimg'		=> "<img src='../images/icon/edit.gif' alt='"._AM_ISP_ICO_EDIT."' title='"._AM_ISP_ICO_EDIT."' align='middle'>",
-	'deleteimg'	=> "<img src='../images/icon/delete.gif' alt='"._AM_ISP_ICO_DELETE."' title='"._AM_ISP_ICO_DELETE."' align='middle'>",
-	'online'		=> "<img src='../images/icon/on.gif' alt='"._AM_ISP_ICO_ONLINE."' title='"._AM_ISP_ICO_ONLINE."' align='middle'>",
-	'offline'		=> "<img src='../images/icon/off.gif' alt='"._AM_ISP_ICO_OFFLINE."' title='"._AM_ISP_ICO_OFFLINE."' align='middle'>",
-	'approved'	=> "<img src='../images/icon/on.gif' alt=''"._AM_ISP_ICO_APPROVED."' title=''"._AM_ISP_ICO_APPROVED."' align='middle'>",
-	'notapproved'	=> "<img src='../images/icon/off.gif' alt='"._AM_ISP_ICO_NOTAPPROVED."' title='"._AM_ISP_ICO_NOTAPPROVED."' align='middle'>",
-	'relatedfaq'	=> "<img src='../images/icon/link.gif' alt='"._AM_ISP_ICO_LINK."' title='"._AM_ISP_ICO_LINK."' align='middle'>",
-	'relatedurl'	=> "<img src='../images/icon/urllink.gif' alt='"._AM_ISP_ICO_URL."' title='"._AM_ISP_ICO_URL."' align='middle'>",
-	'addfaq'		=> "<img src='../images/icon/add.gif' alt='"._AM_ISP_ICO_ADD."' title='"._AM_ISP_ICO_ADD."' align='middle'>",
-	'approve'		=> "<img src='../images/icon/approve.gif' alt='"._AM_ISP_ICO_APPROVE."' title='"._AM_ISP_ICO_APPROVE."' align='middle'>",
-	'statsimg'	=> "<img src='../images/icon/stats.gif' alt='"._AM_ISP_ICO_STATS."' title='"._AM_ISP_ICO_STATS."' align='middle'>",
-	'ignore'		=> "<img src='../images/icon/ignore.gif' alt='"._AM_ISP_ICO_IGNORE."' title='"._AM_ISP_ICO_IGNORE."' align='middle'>",
-	'ack_yes'		=> "<img src='../images/icon/on.gif' alt='"._AM_ISP_ICO_ACK."' title='"._AM_ISP_ICO_ACK."' align='middle'>",
-	'ack_no'		=> "<img src='../images/icon/off.gif' alt='"._AM_ISP_ICO_REPORT."' title='"._AM_ISP_ICO_REPORT."' align='middle'>",
-	'con_yes'		=> "<img src='../images/icon/on.gif' alt='"._AM_ISP_ICO_CONFIRM."' title='"._AM_ISP_ICO_CONFIRM."' align='middle'>",
-	'con_no'		=> "<img src='../images/icon/off.gif' alt='"._AM_ISP_ICO_CONBROKEN."' title='"._AM_ISP_ICO_CONBROKEN."' align='middle'>"
-);
+if(!defined('ISPORTS_ADMIN_URL')) {define('ISPORTS_ADMIN_URL', ISPORTS_URL.'admin/');}
+
+/**
+* First use page of the module
+*
+* The module uses the IcmsPersistable Framework and because of this, no sql/mysql.sq file is
+* necessary to create the database tables of the module. Those tables will be dynamically created
+* when updating the module, based on the class that are defined for the module. Since the creation
+* of those tables are done when the module is updated, we need to force the webmaster to update the
+* module when he first enters the admin side of the module.
+*/
+if(is_object($xoopsModule) && $xoopsModule->dirname() == ISPORTS_DIRNAME)
+{
+	if(defined('XOOPS_CPFUNC_LOADED'))
+	{
+		if(!$xoopsModule->getDBVersion())
+		{
+			redirect_header(ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&op=update&module='.ISPORTS_DIRNAME, 4, _AM_ISPORTS_FIRST_USE);
+		}
+	}
+}
 ?>
